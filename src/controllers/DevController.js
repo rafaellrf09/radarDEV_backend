@@ -47,5 +47,14 @@ module.exports = {
 
     async destroy(req, res) {
         // Deletar um dev
+        try {
+            await Dev.findByIdAndRemove(req.params.id);
+            res.status(200).send("Dev Deletado.");
+        } catch (err) {
+            console.log(err)
+            res.status(404).send({
+                error: "Erro ao apagar ingrediente"
+            });
+        }
     }
 }

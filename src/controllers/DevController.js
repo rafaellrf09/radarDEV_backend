@@ -1,6 +1,7 @@
 const axios = require('axios')
 const Dev = require('./../model/Dev')
 const parseStringAsArray = require('./../utils/parseStringAsArray')
+const { findConnections, sendMessage } = require("../websocket");
 
 // index, show, store, update, destroy
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
         
             let { name = login, avatar_url, bio } = apiResponse.data
 
-            const techsArray = parseStringAsArray(techs)
+            const techsArray = parseStringAsArray(techs.toLowerCase())
         
             const location = {
                 type: 'Point',
@@ -37,6 +38,14 @@ module.exports = {
             })
         }
 
+
+        //filtrar as conexoes
+        const sendSocketMessageTo = findConnections(
+            { latitude, longitude },
+            techsArray
+        )
+
+        sendMessage(sendSocketMessageTo, "new-dev" , dev);
     
         return res.json(dev);
     },
@@ -53,7 +62,7 @@ module.exports = {
         } catch (err) {
             console.log(err)
             res.status(404).send({
-                error: "Erro ao apagar ingrediente"
+                error: "Erro ao apagar dev"
             });
         }
     }

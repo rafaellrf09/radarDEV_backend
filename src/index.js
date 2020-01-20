@@ -23,4 +23,7 @@ app.use(cors());
 app.use(express.json())
 app.use(routes)
 
-server.listen(5000, () => console.log("Connect on port 5000"));
+//subindo servidor
+const port = process.env.PORT || 5000;
+
+server.listen(port, () => console.log(`Connect on port ${port}`));

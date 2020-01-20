@@ -14,6 +14,10 @@ mongoose.connect("mongodb+srv://root:A!b2c3d4e5@cluster0-thkyo.mongodb.net/week1
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
+// mongoose.connect("mongodb://10.22.1.139:27017/week10", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// })
 
 app.use(cors());
 app.use(express.json())

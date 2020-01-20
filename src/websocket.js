@@ -3,7 +3,7 @@ const parseStringAsArray = require("./utils/parseStringAsArray");
 const calculateDistance = require("./utils/calculateDistance");
 
 let io;
-const connections = [];
+let connections = [];
 
 exports.setupWebsocket = (server) => {
     io = socketio(server);

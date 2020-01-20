@@ -36,17 +36,16 @@ module.exports = {
                 techs: techsArray,
                 location
             })
-        }
-
-
-        //filtrar as conexoes
-        const sendSocketMessageTo = findConnections(
-            { latitude, longitude },
-            techsArray
-        )
-
-        sendMessage(sendSocketMessageTo, "new-dev" , dev);
+            //filtrar as conexoes
+            const sendSocketMessageTo = findConnections(
+                { latitude, longitude },
+                techsArray
+            )
     
+            sendMessage(sendSocketMessageTo, "new-dev" , dev);
+        
+        
+        }
         return res.json(dev);
     },
     

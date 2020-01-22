@@ -14,10 +14,14 @@ module.exports = {
     async store(req, res) {
         const { github_username, techs, latitude, longitude } = req.body
 
-        let dev = await Dev.findOne({ github_username })
+        let dev = await Dev.findOne({
+            github_username
+        }).catch(console.error)
 
         if (!dev) {
-            const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`)
+            const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`).catch(console.error)
+
+            if (!apiResponse.data) return res.json({ err: "erro na api do git" })
         
             let { name = login, avatar_url, bio } = apiResponse.data
 
@@ -35,15 +39,15 @@ module.exports = {
                 bio,
                 techs: techsArray,
                 location
-            })
+            }).catch(console.error)
+
             //filtrar as conexoes
             const sendSocketMessageTo = findConnections(
                 { latitude, longitude },
                 techsArray
             )
-    
+
             sendMessage(sendSocketMessageTo, "new-dev" , dev);
-        
         
         }
         return res.json(dev);
